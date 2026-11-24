@@ -7,10 +7,10 @@ test.describe('Budget Manager', () => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
     await page.reload();
-    await page.getByRole('button', { name: '新規登録' }).click();
-    await page.getByLabel('メール').fill(`budget_${Date.now()}@example.com`);
-    await page.getByLabel('パスワード', { exact: true }).fill(testPassword);
-    await page.getByRole('button', { name: '新規登録' }).click();
+    await page.getByRole('button', { name: "Don't have an account? Sign Up" }).click();
+    await page.getByLabel('Email').fill(`budget_${Date.now()}@example.com`);
+    await page.getByLabel('Password', { exact: true }).fill(testPassword);
+    await page.getByRole('button', { name: 'Sign Up' }).click();
     await expect(page.getByRole('heading', { name: 'Spendly' })).toBeVisible();
   });
 
