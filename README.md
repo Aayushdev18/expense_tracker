@@ -12,10 +12,6 @@ A full-stack personal finance tracker. Track income and expenses, view a live ba
 
 ![Analytics](docs/screenshots/analytics.png)
 
-**Sign in** — wabi-sabi themed auth screen
-
-![Sign in](docs/screenshots/login.png)
-
 ## Tech Stack
 
 **Frontend**
