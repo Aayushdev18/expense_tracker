@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { categories } from '@/lib/categories';
+import { useCurrency } from '@/context/CurrencyContext';
 
 function TransactionForm({ onAdd }) {
+  const { currencySymbol } = useCurrency();
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("expense");
@@ -58,7 +60,7 @@ function TransactionForm({ onAdd }) {
           <div className="flex flex-col flex-1 min-w-24">
             <Input
               type="number"
-              placeholder="Amount"
+              placeholder={`Amount (${currencySymbol})`}
               value={amount}
               onChange={(e) => { setAmount(e.target.value); setErrors(prev => ({ ...prev, amount: undefined })); }}
               min="0.01"

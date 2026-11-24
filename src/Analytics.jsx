@@ -8,6 +8,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
+import { useCurrency } from '@/context/CurrencyContext';
 
 const CATEGORY_COLORS = {
   food:          '#f97316',
@@ -57,6 +58,7 @@ function ChartCard({ title, filename, children }) {
 }
 
 function SpendingByCategory({ transactions }) {
+  const { currencySymbol } = useCurrency();
   const expenses = transactions.filter(t => t.type === 'expense');
 
   if (expenses.length === 0) {
@@ -86,7 +88,7 @@ function SpendingByCategory({ transactions }) {
             <Cell key={entry.name} fill={CATEGORY_COLORS[entry.name] || '#94a3b8'} />
           ))}
         </Pie>
-        <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+        <Tooltip formatter={(value) => `${currencySymbol}${value.toFixed(2)}`} />
         <Legend />
       </PieChart>
     </ResponsiveContainer>
@@ -94,6 +96,7 @@ function SpendingByCategory({ transactions }) {
 }
 
 function IncomeVsExpensesByMonth({ transactions }) {
+  const { currencySymbol } = useCurrency();
   if (transactions.length === 0) {
     return <p className="text-sm text-muted-foreground text-center py-8">No data yet.</p>;
   }
@@ -119,8 +122,8 @@ function IncomeVsExpensesByMonth({ transactions }) {
       <BarChart data={data} margin={{ top: 4, right: 16, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
         <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-        <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `$${v}`} width={60} />
-        <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+        <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `${currencySymbol}${v}`} width={60} />
+        <Tooltip formatter={(value) => `${currencySymbol}${value.toFixed(2)}`} />
         <Legend />
         <Bar dataKey="Income" fill="#22c55e" radius={[4, 4, 0, 0]} />
         <Bar dataKey="Expenses" fill="#ef4444" radius={[4, 4, 0, 0]} />
@@ -130,6 +133,7 @@ function IncomeVsExpensesByMonth({ transactions }) {
 }
 
 function BalanceOverTime({ transactions }) {
+  const { currencySymbol } = useCurrency();
   if (transactions.length === 0) {
     return <p className="text-sm text-muted-foreground text-center py-8">No data yet.</p>;
   }
@@ -150,8 +154,8 @@ function BalanceOverTime({ transactions }) {
       <LineChart data={data} margin={{ top: 4, right: 16, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
         <XAxis dataKey="date" tick={{ fontSize: 11 }} />
-        <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `$${v}`} width={60} />
-        <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+        <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `${currencySymbol}${v}`} width={60} />
+        <Tooltip formatter={(value) => `${currencySymbol}${value.toFixed(2)}`} />
         <Line
           type="monotone"
           dataKey="Balance"

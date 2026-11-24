@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { categories } from '@/lib/categories';
+import { useCurrency } from '@/context/CurrencyContext';
 
 // `search` and `filterCategory` are owned by App so the sidebar can drive them too.
 function TransactionList({
@@ -19,6 +20,7 @@ function TransactionList({
   filterCategory,
   onCategoryChange,
 }) {
+  const { currencySymbol } = useCurrency();
   const [filterType, setFilterType] = useState("all");
   const [sortBy, setSortBy] = useState("date-desc");
   const [confirmId, setConfirmId] = useState(null);
@@ -130,7 +132,7 @@ function TransactionList({
                     <Badge variant="secondary">{t.category}</Badge>
                   </TableCell>
                   <TableCell className={`font-semibold ${t.type === "income" ? "text-green-600" : "text-red-600"}`}>
-                    {t.type === "income" ? "+" : "-"}${parseFloat(t.amount).toFixed(2)}
+                    {t.type === "income" ? "+" : "-"}{currencySymbol}{parseFloat(t.amount).toFixed(2)}
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-1">

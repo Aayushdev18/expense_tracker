@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { categories } from '@/lib/categories';
 import { cn } from '@/lib/utils';
+import { useCurrency } from '@/context/CurrencyContext';
 
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -26,8 +27,6 @@ const CATEGORY_COLORS = {
   other: '#64748b',
 };
 
-const money = (n) => `$${n.toFixed(2)}`;
-
 function Sidebar({
   view,
   onViewChange,
@@ -43,6 +42,8 @@ function Sidebar({
   onCollapsedChange,
 }) {
   const { resolvedTheme, setTheme } = useTheme();
+  const { formatAmount, currency, toggleCurrency, currencySymbol } = useCurrency();
+  const money = (n) => formatAmount(n);
   const setCollapsed = onCollapsedChange;
   const [panelOpen, setPanelOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -352,6 +353,15 @@ function Sidebar({
             className="rounded p-1.5 text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
           >
             {resolvedTheme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+          </button>
+          <button
+            type="button"
+            aria-label="Toggle currency"
+            title={`Switch Currency (Current: ${currency})`}
+            onClick={toggleCurrency}
+            className="rounded px-2 py-1 text-xs font-semibold text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors cursor-pointer"
+          >
+            {collapsed ? currencySymbol : `${currencySymbol} ${currency}`}
           </button>
           {collapsed && (
             <button

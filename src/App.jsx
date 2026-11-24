@@ -11,6 +11,7 @@ import Analytics from './Analytics';
 import AuthPage from './AuthPage';
 import BudgetManager from './BudgetManager';
 import Sidebar from './Sidebar';
+import { CurrencySelector } from './context/CurrencyContext';
 
 const VIEW_TITLES = {
   dashboard: { title: 'Dashboard', subtitle: 'Track your income and expenses' },
@@ -240,9 +241,15 @@ function App() {
 
       <div className={navCollapsed ? 'md:pl-16' : 'md:pl-64'}>
         <div className="mx-auto max-w-5xl px-4 py-8">
-          <div className="mb-6 pl-12 md:pl-0">
-            <h2 className="text-2xl font-bold">{title}</h2>
-            <p className="text-muted-foreground">{subtitle}</p>
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pl-12 md:pl-0">
+            <div>
+              <h2 className="text-2xl font-bold">{title}</h2>
+              <p className="text-muted-foreground">{subtitle}</p>
+            </div>
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              <span className="text-xs font-medium text-muted-foreground">Currency:</span>
+              <CurrencySelector />
+            </div>
           </div>
 
         <Dialog open={showChangePassword} onOpenChange={(open) => { if (!open) { setShowChangePassword(false); setCurrentPassword(''); setNewPassword(''); setChangePasswordError(''); } }}>

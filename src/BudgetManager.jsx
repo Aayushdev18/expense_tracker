@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { categories } from '@/lib/categories';
+import { useCurrency } from '@/context/CurrencyContext';
 
 function getMonthSpend(transactions, category) {
   const now = new Date();
@@ -25,6 +26,7 @@ function ProgressBar({ percent }) {
 }
 
 function BudgetManager({ transactions, budgets, onSave, onDelete }) {
+  const { currencySymbol } = useCurrency();
   const [selectedCategory, setSelectedCategory] = useState('food');
   const [amount, setAmount] = useState('');
 
@@ -59,7 +61,7 @@ function BudgetManager({ transactions, budgets, onSave, onDelete }) {
           </Select>
           <Input
             type="number"
-            placeholder="Budget limit ($)"
+            placeholder={`Budget limit (${currencySymbol})`}
             value={amount}
             onChange={e => setAmount(e.target.value)}
             min="0"
@@ -92,7 +94,7 @@ function BudgetManager({ transactions, budgets, onSave, onDelete }) {
                     </div>
                     <div className="flex items-center gap-3">
                       <span className={isOver ? 'text-red-500 font-semibold' : 'text-muted-foreground'}>
-                        ${spent.toFixed(2)} / ${budget.amount.toFixed(2)}
+                        {currencySymbol}{spent.toFixed(2)} / {currencySymbol}{budget.amount.toFixed(2)}
                       </span>
                       <button
                         onClick={() => onDelete(budget.id)}
